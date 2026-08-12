@@ -74,6 +74,50 @@ class ScrollReveal {
   }
 }
 
+/** Copies a button's `data-copy` value to the clipboard and flashes "Copied!" feedback. */
+class ClipboardCopy {
+  constructor({ selector = '[data-copy]' } = {}) {
+    this.buttons = document.querySelectorAll(selector);
+  }
+
+  init() {
+    this.buttons.forEach((btn) => {
+      btn.addEventListener('click', () => this.copy(btn));
+    });
+  }
+
+  async copy(btn) {
+    const text = btn.dataset.copy;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      this.copyWithFallback(text);
+    }
+    this.flashCopied(btn);
+  }
+
+  copyWithFallback(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  }
+
+  flashCopied(btn) {
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1500);
+  }
+}
+
 /** Keeps the footer copyright year current without a build step. */
 class FooterYear {
   constructor({ selector = '#year' } = {}) {
@@ -93,6 +137,7 @@ class VirtualBridgeSite {
       new ScrollController(),
       new MobileMenu(),
       new ScrollReveal(),
+      new ClipboardCopy(),
       new FooterYear(),
     ];
   }
