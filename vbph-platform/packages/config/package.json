@@ -1,0 +1,20 @@
+{
+  "name": "@vbph/config",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "tsconfig.base.json",
+    "eslint-base.mjs",
+    "tailwind-theme.css"
+  ],
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint-base": "./eslint-base.mjs",
+    "./tailwind-theme.css": "./tailwind-theme.css"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "typescript-eslint": "^8.67.0"
+  }
+}

@@ -1,0 +1,206 @@
+/**
+ * Virtual Bridge PH design tokens — shared across apps/web and (later) apps/desktop.
+ *
+ * Brand palette matches the marketing site (charcoal / orange / yellow / teal).
+ * Semantic tokens (primary, destructive, etc.) are what components actually
+ * consume — never reference a brand color directly from a component, always
+ * the semantic token.
+ *
+ * Every text/background pairing below is chosen to clear WCAG AA contrast
+ * (4.5:1 for normal text) — verified by computing actual relative luminance,
+ * not eyeballed. Two real failures were found and fixed in this pass:
+ * white text on the raw brand orange (#f5821f) measured ~2.6:1 — a large
+ * miss — so `--primary-foreground` is now the dark charcoal instead (~6.1:1),
+ * the same pattern the yellow accent already used correctly. `--secondary`
+ * (teal) and `--success` were both measurably too light for white text
+ * (3.76:1 and 3.30:1) and are deepened here to clear 4.5:1 while staying
+ * recognizably the same hue.
+ */
+
+:root {
+  /* Brand palette */
+  --brand-charcoal: #212224;
+  --brand-orange: #f5821f;
+  --brand-orange-deep: #e06a00;
+  --brand-yellow: #ffd400;
+  --brand-teal: #1f6b7d;
+  --brand-teal-light: #6fc3d6;
+
+  /* Neutrals — slight warm bias toward the brand rather than pure gray.
+     Full 50-900 scale (previous version had gaps at 400/600/800) so
+     borders, disabled states, and secondary text have room to be tuned
+     independently instead of reusing the same two or three stops
+     everywhere. */
+  --neutral-50: #fafaf9;
+  --neutral-100: #f3f2f1;
+  --neutral-200: #e6e4e2;
+  --neutral-300: #d1cfcc;
+  --neutral-400: #aca9a5;
+  --neutral-500: #8a8784;
+  --neutral-600: #6b6864;
+  --neutral-700: #4a4846;
+  --neutral-800: #363433;
+  --neutral-900: #212224;
+
+  /* Semantic tokens — light mode */
+  --background: var(--neutral-50);
+  --foreground: var(--brand-charcoal);
+  --card: #ffffff;
+  --card-foreground: var(--brand-charcoal);
+  --popover: #ffffff;
+  --popover-foreground: var(--brand-charcoal);
+
+  --primary: var(--brand-orange);
+  --primary-hover: var(--brand-orange-deep);
+  --primary-foreground: var(--brand-charcoal);
+  /* For TEXT rendered directly on the page/card background (links, "View
+     all" affordances) — not for badges/buttons, which already have their
+     own accessible pairings above. The raw brand orange measures ~2.6:1
+     against white, badly failing AA (4.5:1) for normal-size link text;
+     this dark, still-recognizably-orange tone measures ~7.8:1. No
+     separate hover color — an underline on hover is signal enough and
+     keeps hover state at the same verified-accessible color. */
+  --link: #8a3a0f;
+  --secondary: var(--brand-teal);
+  --secondary-foreground: #ffffff;
+  --accent: var(--brand-yellow);
+  --accent-foreground: var(--brand-charcoal);
+
+  --muted: var(--neutral-100);
+  --muted-foreground: var(--neutral-600);
+  --border: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+  --input: var(--neutral-300);
+  --ring: var(--brand-orange-deep);
+
+  --destructive: #dc2626;
+  --destructive-hover: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --success: #15803d;
+  --success-foreground: #ffffff;
+  --warning: #d97706;
+  --warning-foreground: var(--brand-charcoal);
+  --info: var(--brand-teal);
+  --info-foreground: #ffffff;
+
+  /* Soft, near-white tints of each semantic color — for Alert/Badge
+     surfaces where the SOLID color would be too loud for a whole banner.
+     Each still pairs with its own -foreground color at AA contrast (a
+     10%-opacity-color-on-white blend with full-saturation text, the more
+     obvious way to build this, measured well under 4.5:1 at badge/label
+     text sizes for both the orange and teal brand hues — these are
+     deliberately chosen, not derived from an opacity trick). */
+  --primary-soft: #fdf1e7;
+  --primary-soft-foreground: #8a3a0f;
+  --secondary-soft: #eaf4f6;
+  --secondary-soft-foreground: var(--brand-teal);
+  --success-soft: #ecfdf3;
+  --success-soft-foreground: #14532d;
+  --warning-soft: #fffbeb;
+  --warning-soft-foreground: #78350f;
+  --destructive-soft: #fef2f2;
+  --destructive-soft-foreground: #7f1d1d;
+  --info-soft: #eff8fa;
+  --info-soft-foreground: #164e5c;
+
+  --radius: 0.625rem;
+
+  /* Elevation — charcoal-tinted instead of pure black, so shadows read as
+     part of the same warm system rather than a generic browser default. */
+  --shadow-color: 33 34 36;
+  --shadow-xs: 0 1px 2px 0 rgb(var(--shadow-color) / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(var(--shadow-color) / 0.08), 0 1px 2px -1px rgb(var(--shadow-color) / 0.06);
+  --shadow-md: 0 4px 8px -2px rgb(var(--shadow-color) / 0.08), 0 2px 4px -2px rgb(var(--shadow-color) / 0.06);
+  --shadow-lg: 0 12px 20px -6px rgb(var(--shadow-color) / 0.12), 0 4px 8px -4px rgb(var(--shadow-color) / 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-link: var(--link);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-foreground: var(--primary-soft-foreground);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-secondary-soft-foreground: var(--secondary-soft-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-success-soft-foreground: var(--success-soft-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-soft-foreground: var(--warning-soft-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-soft-foreground: var(--destructive-soft-foreground);
+  --color-info-soft: var(--info-soft);
+  --color-info-soft-foreground: var(--info-soft-foreground);
+
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+/* Small, purposeful motion — a fade for the backdrop, a fade+rise for the
+   dialog itself. Both are opted into via Tailwind's `motion-safe:`
+   variant at each call site, never applied unconditionally. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+}

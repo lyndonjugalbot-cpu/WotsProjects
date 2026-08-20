@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Tauri
+apps/desktop/src-tauri/target/
+
+# Env — ignore everything env-shaped by default, then explicitly allow back
+# in the *.example templates (dev/production) that are safe/meant to be
+# committed. This is deliberately broader than just ".env" / ".env.local" /
+# ".env.*.local" so a file like ".env.production" (no ".local" suffix) can
+# never slip through just because it doesn't match a narrower pattern.
+.env
+.env.*
+!.env*.example
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Misc
+.DS_Store
+*.log
+.vercel/
+apps/desktop/src-tauri/gen/
+.vercel
+.env*

@@ -1,0 +1,25 @@
+# This repo root has no .gitignore of its own today — everything below is
+# additive safety for whatever ends up tracked here alongside vbph-platform/
+# (which has its own, more specific .gitignore).
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Never commit env files from anywhere in this repo, no exceptions.
+# Explicit .example allowlist below.
+.env
+.env.*
+!.env*.example
+
+# Editors
+.vscode/
+.idea/
+
+# Node
+node_modules/
+.pnpm-store/
+npm-debug.log*
+
+# Misc local archives / scratch — verify contents before ever removing this line
+Archive.zip

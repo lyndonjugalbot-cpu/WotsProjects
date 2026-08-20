@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "@vbph/config/tailwind-theme.css";
+
+/* Tailwind v4 doesn't crawl outside this app's own root by default —
+   this tells it to also scan the shared component library for class names. */
+@source "../../../../packages/ui/src";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}

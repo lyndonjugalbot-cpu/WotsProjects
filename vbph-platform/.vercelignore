@@ -1,0 +1,29 @@
+# vbph-platform isn't (yet) its own git repo, so Vercel's CLI doesn't
+# inherit .gitignore automatically for a raw-directory deploy — mirror the
+# same exclusions here explicitly.
+
+node_modules
+**/node_modules
+
+.next
+**/.next
+out
+build
+dist
+*.tsbuildinfo
+
+# Rust build artifacts — multi-GB, irrelevant to the web app build
+apps/desktop/src-tauri/target
+apps/desktop/src-tauri/gen
+
+.pnpm-store
+.vercel
+
+supabase/.branches
+supabase/.temp
+
+.DS_Store
+*.log
+.env
+.env.*
+!.env*.example
