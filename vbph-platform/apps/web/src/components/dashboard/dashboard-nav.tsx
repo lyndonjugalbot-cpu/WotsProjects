@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, type LucideIcon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@vbph/ui";
 import type { DashboardNavItem } from "./dashboard-shell";
 
@@ -28,7 +28,6 @@ function NavLinks({
     <>
       {navItems.map((item) => {
         const active = isActive(pathname, item.href);
-        const Icon: LucideIcon | undefined = item.icon;
         return (
           <Link
             key={item.href}
@@ -42,7 +41,7 @@ function NavLinks({
                 : "text-foreground/80 hover:bg-muted hover:text-foreground"
             )}
           >
-            {Icon ? <Icon className="size-4 shrink-0" aria-hidden="true" /> : null}
+            {item.icon}
             {item.label}
           </Link>
         );

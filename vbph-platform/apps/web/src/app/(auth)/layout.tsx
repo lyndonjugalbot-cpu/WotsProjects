@@ -1,4 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+
+// The marketing site, not this app's own "/" — that route just redirects
+// an unauthenticated visitor straight back to /login (see app/page.tsx),
+// which would make a "back to home" link from here a redirect loop.
+const MARKETING_SITE_URL = "https://virtual-bridge-ph.vercel.app";
 
 const VALUE_PROPS = [
   "Vetted, approved VAs — every rate calculated server-side",
@@ -49,15 +56,24 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </p>
       </div>
 
-      <main className="flex flex-1 flex-col items-center justify-center gap-8 p-6">
-        <Image
-          src="/brand/logo-full.png"
-          alt="Virtual Bridge PH"
-          width={220}
-          height={55}
-          priority
-          className="h-auto w-44 lg:hidden"
-        />
+      <main className="flex flex-1 flex-col items-center justify-center gap-6 p-6">
+        <div className="flex w-full max-w-sm flex-col items-start gap-6">
+          <Link
+            href={MARKETING_SITE_URL}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            Back to Home
+          </Link>
+          <Image
+            src="/brand/logo-full.png"
+            alt="Virtual Bridge PH"
+            width={220}
+            height={55}
+            priority
+            className="h-auto w-44 self-center lg:hidden"
+          />
+        </div>
         <div className="w-full max-w-sm">{children}</div>
       </main>
     </div>

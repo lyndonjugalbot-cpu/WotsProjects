@@ -136,7 +136,7 @@ header.scrolled{
 .nav-links{
   display:flex;
   align-items:center;
-  gap:36px;
+  gap:28px;
 }
 .nav-links a{
   font-size:15px;
@@ -144,6 +144,7 @@ header.scrolled{
   color:var(--text);
   position:relative;
   padding:4px 0;
+  white-space:nowrap;
 }
 .nav-links a::after{
   content:'';
@@ -153,7 +154,8 @@ header.scrolled{
   transition:width .25s ease;
 }
 .nav-links a:hover::after{width:100%;}
-.nav-cta{display:flex;align-items:center;gap:16px;}
+.nav-cta{display:flex;align-items:center;gap:12px;}
+.nav-cta .btn{white-space:nowrap;}
 .nav-cta .btn{padding:11px 22px;font-size:14px;}
 .hamburger{
   display:none;
@@ -656,6 +658,124 @@ footer{
 .services-grid .reveal:nth-child(5){transition-delay:.48s;}
 .services-grid .reveal:nth-child(6){transition-delay:.6s;}
 
+/* Download page — app window mockup (hero visual) */
+.tracker-mockup{
+  position:relative;
+  width:100%;
+  max-width:340px;
+  background:var(--white);
+  border-radius:20px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  border:1px solid rgba(33,34,36,0.06);
+}
+.tracker-mockup-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:14px 16px;
+  background:var(--charcoal);
+}
+.tracker-mockup-dot{width:10px;height:10px;border-radius:50%;}
+.tracker-mockup-dot:nth-child(1){background:#ff5f57;}
+.tracker-mockup-dot:nth-child(2){background:#febc2e;}
+.tracker-mockup-dot:nth-child(3){background:#28c840;}
+.tracker-mockup-title{margin-left:8px;font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;}
+.tracker-mockup-body{
+  padding:36px 28px;
+  text-align:center;
+  background:linear-gradient(160deg,var(--white),var(--teal-pale));
+}
+.tracker-mockup-label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--text-soft);margin-bottom:10px;}
+.tracker-mockup-time{
+  font-family:'Poppins',sans-serif;
+  font-size:42px;
+  font-weight:700;
+  color:var(--charcoal);
+  font-variant-numeric:tabular-nums;
+  margin-bottom:22px;
+}
+.tracker-mockup-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-deep));
+  color:var(--white);
+  padding:10px 24px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:14px;
+  box-shadow:0 10px 24px rgba(245,130,31,0.35);
+}
+.tracker-mockup-pulse{width:8px;height:8px;border-radius:50%;background:var(--white);animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.35;transform:scale(0.7);}}
+.tracker-mockup-meta{
+  display:flex;
+  justify-content:space-between;
+  padding:16px 28px;
+  border-top:1px solid rgba(33,34,36,0.06);
+  font-size:12px;
+  color:var(--text-soft);
+}
+.tracker-mockup-meta b{color:var(--charcoal);font-variant-numeric:tabular-nums;}
+
+/* Download page — hero CTA (platform + version on two lines) */
+.btn-download{flex-direction:column;align-items:flex-start;gap:2px;min-width:250px;}
+.btn-download-top{display:flex;align-items:center;gap:10px;font-size:16px;}
+.btn-download-sub{font-size:12px;font-weight:500;opacity:0.85;padding-left:26px;}
+
+/* Download page — platform cards */
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.platform-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:34px 28px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.platform-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.platform-card.disabled{opacity:0.6;}
+.platform-card.disabled:hover{transform:none;box-shadow:var(--shadow);}
+.platform-icon{
+  width:56px;height:56px;
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  font-size:26px;
+  background:rgba(245,130,31,0.1);
+}
+.platform-card h3{font-size:18px;font-weight:700;color:var(--charcoal);margin-bottom:6px;}
+.platform-meta{font-size:13px;color:var(--text-soft);margin-bottom:18px;}
+.platform-badge{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:999px;
+  margin-bottom:16px;
+}
+.platform-badge-available{background:rgba(40,200,64,0.14);color:#1a8a34;}
+.platform-badge-soon{background:rgba(33,34,36,0.08);color:var(--text-soft);}
+.platform-card .btn{width:100%;}
+.platform-card .btn-disabled{pointer-events:none;background:rgba(33,34,36,0.08);color:var(--text-soft);box-shadow:none;border-color:transparent;}
+
+/* Download page — install note */
+.install-note{
+  display:flex;
+  gap:14px;
+  background:rgba(255,212,0,0.1);
+  border:1px solid rgba(255,212,0,0.35);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  margin-top:8px;
+}
+.install-note-icon{font-size:20px;line-height:1;}
+.install-note h4{font-size:14px;font-weight:700;color:var(--charcoal);margin-bottom:4px;}
+.install-note p{font-size:13.5px;color:var(--text-soft);}
+
 /* Parallax hero blobs */
 .hero::before{transform:translateY(calc(var(--scrollY,0px) * 0.12));}
 .hero::after{transform:translateY(calc(var(--scrollY,0px) * -0.08));}
@@ -683,8 +803,9 @@ a:focus-visible,button:focus-visible{
   .step-connector{display:none;}
   .footer-top{grid-template-columns:1fr;}
   .payment-grid{grid-template-columns:1fr;}
+  .platform-grid{grid-template-columns:1fr;}
 }
-@media (max-width: 1040px){
+@media (max-width: 1280px){
   .nav-links,.nav-cta .btn-outline{display:none;}
   .hamburger{display:flex;}
 }
@@ -696,4 +817,5 @@ a:focus-visible,button:focus-visible{
   .cta-band{padding:48px 24px;margin:0 16px;}
   .footer-bottom{flex-direction:column;align-items:flex-start;}
   .page-header{padding-top:130px;}
+  .install-note{flex-direction:column;}
 }

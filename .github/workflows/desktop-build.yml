@@ -1,0 +1,71 @@
+name: Build Desktop Time Tracker
+
+# Manual trigger (Actions tab -> Build Desktop Time Tracker -> Run workflow)
+# for on-demand builds, plus an automatic run whenever a "desktop-vX.Y.Z"
+# tag is pushed, for actual releases later.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "desktop-v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            name: macos-arm64
+          - platform: windows-latest
+            name: windows-x64
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: vbph-platform/pnpm-lock.yaml
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install workspace dependencies
+        working-directory: vbph-platform
+        run: pnpm install --frozen-lockfile
+
+      - name: Build and bundle
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Anon key is safe to embed here for the same reason it's already
+          # safe inside the compiled desktop binary itself (see
+          # apps/desktop/.env.local.example): Row Level Security is what
+          # actually authorizes access, not this key. Never put a
+          # service-role key anywhere in this file.
+          VITE_SUPABASE_URL: https://vvgddcqetxqvwtbdvkus.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2Z2RkY3FldHhxdnd0YmR2a3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxOTY5NTgsImV4cCI6MjEwMjc3Mjk1OH0.4k11Q1JxaUqk7nbSNoiD9YT7jofo2BAwWT2728auWyA
+          VITE_API_BASE_URL: https://vbph-platform.vercel.app
+        with:
+          projectPath: vbph-platform/apps/desktop
+
+      # No code-signing identity/certificate is configured (see
+      # docs/production-deployment-checklist.md) — every artifact here is
+      # UNSIGNED. macOS needs right-click -> Open past Gatekeeper; Windows
+      # will show a SmartScreen "unrecognized app" warning. Fine for
+      # internal testing, not for handing to non-technical VAs as-is.
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: vbph-time-tracker-${{ matrix.name }}
+          path: |
+            vbph-platform/apps/desktop/src-tauri/target/release/bundle/**/*.dmg
+            vbph-platform/apps/desktop/src-tauri/target/release/bundle/**/*.app
+            vbph-platform/apps/desktop/src-tauri/target/release/bundle/**/*.msi
+            vbph-platform/apps/desktop/src-tauri/target/release/bundle/**/*.exe
+          if-no-files-found: error

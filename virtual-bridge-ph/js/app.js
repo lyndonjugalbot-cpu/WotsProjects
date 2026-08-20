@@ -118,6 +118,27 @@ class ClipboardCopy {
   }
 }
 
+/**
+ * Download page only: detects the visitor's OS and adapts the hero CTA —
+ * a Mac visitor gets a direct download button, anyone else gets an honest
+ * "not built for your OS yet" state instead of a link that would just
+ * hand them a .dmg they can't open.
+ */
+class PlatformDetector {
+  constructor({ ctaSelector = '#heroDownloadBtn' } = {}) {
+    this.cta = document.querySelector(ctaSelector);
+  }
+
+  init() {
+    if (!this.cta) return;
+    const isMac = /Mac|iPhone|iPod|iPad/.test(window.navigator.platform || window.navigator.userAgent);
+    if (isMac) return; // markup already defaults to the macOS download state
+    this.cta.href = '#platforms';
+    this.cta.querySelector('.btn-download-top').textContent = 'See download options';
+    this.cta.querySelector('.btn-download-sub').textContent = "We'll show what's available for your system";
+  }
+}
+
 /** Keeps the footer copyright year current without a build step. */
 class FooterYear {
   constructor({ selector = '#year' } = {}) {
@@ -138,6 +159,7 @@ class VirtualBridgeSite {
       new MobileMenu(),
       new ScrollReveal(),
       new ClipboardCopy(),
+      new PlatformDetector(),
       new FooterYear(),
     ];
   }

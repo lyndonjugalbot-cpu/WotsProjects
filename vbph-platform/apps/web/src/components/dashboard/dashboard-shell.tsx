@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
 import { Avatar } from "@vbph/ui";
 import { signOutAction } from "@/server/actions/auth";
 import { DashboardNavLinks, MobileNav } from "./dashboard-nav";
@@ -7,7 +6,17 @@ import { DashboardNavLinks, MobileNav } from "./dashboard-nav";
 export interface DashboardNavItem {
   label: string;
   href: string;
-  icon?: LucideIcon;
+  /**
+   * A pre-rendered icon element (e.g. `<LayoutDashboard className="size-4" aria-hidden="true" />`),
+   * NOT a bare component reference. DashboardShell is a Server Component
+   * but DashboardNavLinks/MobileNav (dashboard-nav.tsx) are Client
+   * Components — a raw component/function value can't cross that
+   * boundary as a prop (React throws "Functions cannot be passed
+   * directly to Client Components" at render time; this is a runtime RSC
+   * rule that `tsc`/`next build` do not catch). A rendered ReactNode
+   * crosses fine, same as `children`.
+   */
+  icon?: React.ReactNode;
 }
 
 export interface DashboardShellProps {

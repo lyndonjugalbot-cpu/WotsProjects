@@ -22,7 +22,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self'; connect-src 'self' http://localhost:3000 http://127.0.0.1:54321 ipc: http://ipc.localhost"
+      "csp": "default-src 'self'; connect-src 'self' http://localhost:3000 http://127.0.0.1:54321 https://vbph-platform.vercel.app https://vvgddcqetxqvwtbdvkus.supabase.co ipc: http://ipc.localhost"
     }
   },
   "bundle": {

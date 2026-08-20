@@ -2,12 +2,14 @@ import { LayoutDashboard, Search, FileText, Clock, Wallet } from "lucide-react";
 import { requireRole } from "@/lib/auth/require-role";
 import { DashboardShell, type DashboardNavItem } from "@/components/dashboard/dashboard-shell";
 
+const ICON_CLASS = "size-4 shrink-0";
+
 const NAV_ITEMS: DashboardNavItem[] = [
-  { label: "Dashboard", href: "/va/dashboard", icon: LayoutDashboard },
-  { label: "Job Marketplace", href: "/va/jobs", icon: Search },
-  { label: "My Applications", href: "/va/applications", icon: FileText },
-  { label: "Work Diary", href: "/va/work-diary", icon: Clock },
-  { label: "Compensation", href: "/va/compensation", icon: Wallet },
+  { label: "Dashboard", href: "/va/dashboard", icon: <LayoutDashboard className={ICON_CLASS} aria-hidden="true" /> },
+  { label: "Job Marketplace", href: "/va/jobs", icon: <Search className={ICON_CLASS} aria-hidden="true" /> },
+  { label: "My Applications", href: "/va/applications", icon: <FileText className={ICON_CLASS} aria-hidden="true" /> },
+  { label: "Work Diary", href: "/va/work-diary", icon: <Clock className={ICON_CLASS} aria-hidden="true" /> },
+  { label: "Compensation", href: "/va/compensation", icon: <Wallet className={ICON_CLASS} aria-hidden="true" /> },
   // Profile — later phases.
 ];
 
