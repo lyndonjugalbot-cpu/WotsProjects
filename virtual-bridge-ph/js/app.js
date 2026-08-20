@@ -120,9 +120,9 @@ class ClipboardCopy {
 
 /**
  * Download page only: detects the visitor's OS and adapts the hero CTA —
- * a Mac visitor gets a direct download button, anyone else gets an honest
- * "not built for your OS yet" state instead of a link that would just
- * hand them a .dmg they can't open.
+ * Mac and Windows visitors each get a direct download button for their own
+ * platform, anyone else gets an honest "not built for your OS yet" state
+ * instead of a link that would just hand them a file they can't open.
  */
 class PlatformDetector {
   constructor({ ctaSelector = '#heroDownloadBtn' } = {}) {
@@ -131,8 +131,14 @@ class PlatformDetector {
 
   init() {
     if (!this.cta) return;
-    const isMac = /Mac|iPhone|iPod|iPad/.test(window.navigator.platform || window.navigator.userAgent);
-    if (isMac) return; // markup already defaults to the macOS download state
+    const ua = window.navigator.platform || window.navigator.userAgent;
+    if (/Mac|iPhone|iPod|iPad/.test(ua)) return; // markup already defaults to the macOS download state
+    if (/Win/.test(ua)) {
+      this.cta.href = 'downloads/vbph-time-tracker-windows-x64-setup.exe';
+      this.cta.querySelector('.btn-download-top').textContent = '🪟 Download for Windows';
+      this.cta.querySelector('.btn-download-sub').textContent = 'Windows 10+ · 64-bit';
+      return;
+    }
     this.cta.href = '#platforms';
     this.cta.querySelector('.btn-download-top').textContent = 'See download options';
     this.cta.querySelector('.btn-download-sub').textContent = "We'll show what's available for your system";
